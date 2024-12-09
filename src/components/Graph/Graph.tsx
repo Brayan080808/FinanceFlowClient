@@ -88,7 +88,7 @@ export default function Graph({ categories,title }:Graph) {
     switch (chartType) {
       case 'Bar':
         return (
-          <ResponsiveContainer width="100%" height={300}>
+          <ResponsiveContainer width="100%" height={300} className="translate-x-[-35px] sm:translate-x-0">
             <BarChart data={visibleData}>
               <XAxis dataKey="category" />
               <YAxis />
@@ -103,7 +103,7 @@ export default function Graph({ categories,title }:Graph) {
         )
       case 'Pie':
         return (
-          <ResponsiveContainer width="100%" height={300}>
+          <ResponsiveContainer width="100%" height={300} >
             <PieChart>
               <Pie
                 data={visibleData}
@@ -152,7 +152,7 @@ export default function Graph({ categories,title }:Graph) {
       <div className="p-6">
         <h2 className="text-2xl font-bold mb-4">Estadísticas de {title}</h2>
       </div>
-      <div className="px-6 pb-6">
+      <div className="sm:px-6 pb-6">
         <div className="space-y-4">
           <div className="flex flex-wrap justify-between gap-2">
             <div className="space-x-2">
@@ -196,7 +196,7 @@ export default function Graph({ categories,title }:Graph) {
 
           </div>
   
-          <div className="flex justify-center text-black">
+          <div className="flex justify-center   text-black">
             {renderChart()}
           </div>
           <div className="flex flex-wrap justify-center gap-2">
