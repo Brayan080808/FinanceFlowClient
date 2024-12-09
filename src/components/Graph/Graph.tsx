@@ -88,7 +88,7 @@ export default function Graph({ categories,title }:Graph) {
     switch (chartType) {
       case 'Bar':
         return (
-          <ResponsiveContainer width="100%" height={300} className="translate-x-[-35px] sm:translate-x-0">
+          <ResponsiveContainer width="100%" height={300} className="translate-x-[-15px] sm:translate-x-0">
             <BarChart data={visibleData}>
               <XAxis dataKey="category" />
               <YAxis />

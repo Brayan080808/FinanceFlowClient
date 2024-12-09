@@ -67,7 +67,7 @@ export default function Timeline() {
             {isLoading && <Spiner />}
             {isError && <GraphError refetch={refetch} />} 
             {isSuccess && (
-                      <ResponsiveContainer width="100%" height="100%" className="translate-x-[-35px] sm:translate-x-0">
+                      <ResponsiveContainer width="100%" height="100%" className="translate-x-[-15px] sm:translate-x-0">
                         <LineChart data={filteredData}>
                           <YAxis dataKey="value" />
                           <XAxis dataKey="date" tick={false} />
