@@ -39,14 +39,13 @@ export default function Login() {
     }
 
     if (data?.status === 200){
-      navigate('/dashboard/') 
+      navigate('/') 
     }
     else if (data?.status === 201){
       navigate('/account/config/')
     }
   }
   else if(code && provider && user.name == " " && !isPending){
-    console.log("else if")
     mutate({code,provider})
 
   }
@@ -67,7 +66,7 @@ export default function Login() {
         user.setMail(data.email)
 
         if (response.status === 200){
-          navigate('/dashboard/') 
+          navigate('/') 
         }
         else if (response.status === 201){
           navigate('/account/config/')

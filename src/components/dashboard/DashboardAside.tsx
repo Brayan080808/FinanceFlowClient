@@ -15,7 +15,7 @@ export default function SidebarNav() {
   const { theme } = useUser();
 
   const navItems: NavItem[] = [
-    { name: 'Dashboard', path: '/dashboard', icon: <Home className="w-5 h-5" /> },
+    { name: 'Dashboard', path: '/', icon: <Home className="w-5 h-5" /> },
     { name: 'Currency Converter', path: '/currencyConverter', icon: <ArrowRightLeft className="w-5 h-5" /> },
     { name: 'Contact', path: '/contact', icon: <MessageSquare className="w-5 h-5" /> },
     { name: 'Settings', path: '/account/config/', icon: <Settings className="w-5 h-5" /> },

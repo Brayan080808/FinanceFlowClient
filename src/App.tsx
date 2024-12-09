@@ -33,7 +33,7 @@ function App() {
         <BrowserRouter>
             <Routes>
               <Route path="/" element={<Base  />}>
-                <Route path='dashboard' element={
+                <Route index element={
                   user.name == " " ? <Navigate to={'/login'} />
                                          : <Stadicts />
                   }

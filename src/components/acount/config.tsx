@@ -158,7 +158,7 @@ export default function AccountConfig() {
 
 
   if(isSuccess){
-    navigate('/dashboard/')
+    navigate('/')
     window.location.reload();
   }
 

@@ -76,7 +76,7 @@ export default function Stadicts() {
               Enlaces Rápidos
             </h4>
             <nav className="flex flex-col space-y-2 text-sm">
-              <Link to="/dashboard" className="hover:underline">Dashboard</Link>
+              <Link to="/" className="hover:underline">Dashboard</Link>
               <Link to="/transactions" className="hover:underline">Transacciones</Link>
               <Link to="/reports" className="hover:underline">Reportes</Link>
             </nav>
