@@ -21,6 +21,8 @@ export default function useTransactions(){
             return lastPage.next;
         },
     })
+    console.log(data);
+
     return {
         isPending, 
         isError,

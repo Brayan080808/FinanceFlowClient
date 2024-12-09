@@ -4,6 +4,24 @@ import { useQueryClient } from "@tanstack/react-query";
 import useFilters from '../../store/useFilters';
 import useUser from '../../store/useUser';
 
+interface Transaction {
+    name: string;
+    amount: number;
+    category: string;
+}
+
+interface Page{
+    count:number;
+    transactions:Transaction[];
+    category:string
+}
+
+
+interface PagesTransaction{
+    pageParams:number[];
+    pages:Page[];
+}
+
 
 
 export default function Transaction({transaction,isErrorNew,isPendingNew, mutatePost, resetNew}){
@@ -18,8 +36,7 @@ export default function Transaction({transaction,isErrorNew,isPendingNew, mutate
 
     
     const handleCancel = () => {
-        const transactions = queryClient.getQueryData(['transactions',url]);
-
+        const transactions:PagesTransaction = queryClient.getQueryData(['transactions',url]);
         if(isErrorNew){
             transactions?.pages[0].transactions.shift();
             queryClient.setQueryData(['transactions',url],transactions);

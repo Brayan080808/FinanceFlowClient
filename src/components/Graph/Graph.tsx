@@ -1,12 +1,13 @@
 import { useState } from 'react'
-import { BarChart, Bar, PieChart, Pie, LineChart, Line, XAxis, YAxis, Tooltip, Legend, Cell, ResponsiveContainer } from 'recharts'
+import { BarChart, Bar, PieChart, Pie, LineChart, Line, XAxis, YAxis, Tooltip, Cell, ResponsiveContainer } from 'recharts'
 import useUser from '../../store/useUser';
 
 interface Data{
   category:string;
   amount:number;
   count:number;
-  income:boolean;
+  income?:boolean;
+  hidden?:boolean;
 }
 
 interface Graph{
@@ -45,7 +46,7 @@ export default function Graph({ categories,title }:Graph) {
 
   const toggleCategory = (category: string) => {
     setData(prevData => 
-      prevData.map(item => 
+      prevData.map((item):Data => 
         item.category === category 
           ? { ...item, hidden: !item.hidden } 
           : item
@@ -58,8 +59,10 @@ export default function Graph({ categories,title }:Graph) {
   const  visibleData = convertedData.map(item => ({
     category: item.category,
     income: item.income,
-    amount: parseFloat(item.amount), // Convierte a float
-    count: parseInt(item.count, 10)   // Convierte a int
+    // amount: parseFloat(item.amount), // Convierte a float
+    // count: parseInt(item.count, 10)   // Convierte a int
+    amount: item.amount, // Convierte a float
+    count: item.count   // Convierte a int
 }));
 
   const renderChart = () => {
@@ -155,7 +158,7 @@ export default function Graph({ categories,title }:Graph) {
           <div className="flex flex-wrap justify-between gap-2">
             <div className="space-x-2">
               {['Bar','Pie','Line'].map(
-                (type,key) => (
+                (type:'Bar'|'Pie'|'Line',key:number) => (
                   
                     <button 
                       key={key}
@@ -175,7 +178,7 @@ export default function Graph({ categories,title }:Graph) {
 
             <div className="space-x-2">
 
-            {['Amount','Count'].map((type,key)=>
+            {['Amount','Count'].map((type:'Amount' | 'Count',key:number)=>
                   (
                   <button 
                     key={key}

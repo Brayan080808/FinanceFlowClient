@@ -12,7 +12,7 @@ export default function useCategories(){
 
     return {isError, isLoading, error,data,isSuccess,refetch,
 
-        spendingCategory: data?.data.spendingCategory.length === 0 ? [{"amount":"0","count":"0"}] :data?.data.spendingCategory,
+        spendingCategory: data?.data.spendingCategory.length === 0 ? [] :data?.data.spendingCategory,
         incomeTotal: data?.data.incomeTotal ?? [{"amount":0},{"amount":0}],
         // incomeCategory: data?.data.incomeCategory,
      }

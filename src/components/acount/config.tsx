@@ -1,11 +1,18 @@
 import { useEffect, useState } from 'react'
-import { X, Plus, AlertCircle, XCircle } from 'lucide-react'
+import { X, Plus, XCircle, AlertCircle } from 'lucide-react'
 import useMutationConfig from '../../hooks/useMutationConfig'
 import Spiner from '../Spiner'
 import { useNavigate } from 'react-router-dom'
 import useCategories from '../../hooks/useCategories'
 import useCoin from '../../hooks/useCoin'
 import Warning from './warning'
+
+interface SpendingCategory{
+  category:string;
+  income:boolean;
+  amount:number;
+  count:number;
+}
 
 
 
@@ -36,14 +43,13 @@ export default function AccountConfig() {
   const [selectedCurrency, setSelectedCurrency] = useState<string>();
   const [expenseTags, setExpenseTags] = useState<string[]>([]);
   const [incomeTags, setIncomeTags] = useState<string[]>([]);
-  const [showErrorNotification,setShowErrorNotification] = useState<boolean>(false);
   const [newTag, setNewTag] = useState('');
   const [activeCategory, setActiveCategory] = useState<TagCategory>('expense');
   const [error, setError] = useState('');
   const [showWarning, setShowWarning] = useState(false)
   const { mutate, isPending, reset, isSuccess, isError:configError } = useMutationConfig();
   const navigate = useNavigate();
-  const { isLoading, spendingCategory, isError, isSuccess:isSuccessCategories } = useCategories();
+  const { isLoading, spendingCategory, isSuccess:isSuccessCategories } = useCategories();
   const coin = useCoin();
 
 
@@ -71,23 +77,19 @@ export default function AccountConfig() {
     setTags(prev => prev.filter(t => t !== tag))
   }
 
-  let initialExpenseTags:String[];
-  let initialIncomeTags:String[];
-  let expenseTagsFinal:String[];
-  let incomeTagsFinal:String[];
-  let tags:String[];
+  let initialExpenseTags:string[];
+  let initialIncomeTags:string[];
+  let expenseTagsFinal:string[];
+  let incomeTagsFinal:string[];
+  let tags:string[];
 
 
   
   useEffect(()=>{
 
-    initialExpenseTags = spendingCategory?
-    .filter(item => !item.income ) // Filtra los objetos donde income es true
-    .map(item => item.category);
+    initialExpenseTags = spendingCategory?.filter(item => !item.income ).map(item => item.category);
 
-    initialIncomeTags = spendingCategory?
-    .filter(item => item.income) // Filtra los objetos donde income es true
-    .map(item => item.category);
+    initialIncomeTags = spendingCategory?.filter(item => item.income).map(item => item.category);
 
     setExpenseTags(initialExpenseTags);
     setIncomeTags(initialIncomeTags);
@@ -96,7 +98,8 @@ export default function AccountConfig() {
   useEffect(()=>{
 
       if(coin.isSuccess){
-        setSelectedCurrency(currencies.find(item => item.name === coin.coin.coin)?.code)
+        console.log()
+        setSelectedCurrency(currencies.find(item => item.name == coin.data.data.coin)?.code)
       }
 
 
@@ -106,19 +109,10 @@ export default function AccountConfig() {
 
   if(isLoading || coin.isLoading) return <div className=' w-screen h-screen flex justify-center items-center'><Spiner /></div>
 
-
-
-  console.log("isError",isError)
-
-  initialExpenseTags = spendingCategory?
-  .filter(item => !item.income ) // Filtra los objetos donde income es true
-  .map(item => item.category);
+  initialExpenseTags = spendingCategory?.filter((item:SpendingCategory) => !item.income ).map(item => item.category);
   
-  initialIncomeTags = spendingCategory?
-  .filter(item => item.income) // Filtra los objetos donde income es true
-  .map(item => item.category);
 
-
+  initialIncomeTags = spendingCategory?.filter((item:SpendingCategory) => item.income).map(item => item.category);
 
   
   expenseTagsFinal = initialExpenseTags.concat(expenseDefaultTags);
@@ -167,6 +161,9 @@ export default function AccountConfig() {
     navigate('/dashboard/')
     window.location.reload();
   }
+
+
+  console.log(spendingCategory)
   
 
   return (
@@ -229,9 +226,9 @@ export default function AccountConfig() {
               Selecciona etiquetas para tus {activeCategory === 'expense' ? 'gastos' : 'ingresos'}
             </label>
             <div className="flex flex-wrap gap-2 mb-4">
-              {getInitialTags()?.map((tag) => (
+              {getInitialTags()?.map((tag:string,key:number) => (
                 <button
-                  key={tag}
+                  key={key}
                   onClick={() => handleTagClick(tag, activeCategory)}
                   className={`px-3 py-1 rounded-full text-sm font-medium ${
                     getActiveTags()?.includes(tag)
@@ -275,9 +272,9 @@ export default function AccountConfig() {
               Etiquetas de {activeCategory === 'expense' ? 'gastos' : 'ingresos'} seleccionadas
             </label>
             <div className="flex flex-wrap gap-2">
-              {getActiveTags()?.map(tag => (
+              {getActiveTags()?.map((tag,key) => (
                 <span
-                  key={tag}
+                  key={key}
                   className={`px-3 py-1 rounded-full text-sm font-medium text-white flex items-center ${
                     activeCategory === 'expense' ? 'bg-red-500' : 'bg-green-500'
                   }`}
@@ -310,6 +307,14 @@ export default function AccountConfig() {
             </div>
           </div>
         )}
+
+
+          {error && (
+            <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded-md flex items-center">
+              <AlertCircle className="mr-2" size={20} />
+              {error}
+            </div>
+          )}
 
 
           {showWarning && (

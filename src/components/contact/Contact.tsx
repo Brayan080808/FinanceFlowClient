@@ -1,18 +1,17 @@
-import { useState } from 'react'
 import { Mail, Linkedin, GitlabIcon as GitHub, Phone, Send, MapPin } from 'lucide-react'
 import useUser from '../../store/useUser'
 import { useForm } from 'react-hook-form';
 import useSendMail from '../../hooks/useSendMail';
 import Spiner from '../Spiner'
+import SuccessNotification from './SuccessNotification'
+import ErrorNotification from './ErrorNotification'
 
 
 export default function ContactSection() {
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
-  const [message, setMessage] = useState('')
+
   const { theme } = useUser();
   const { register, handleSubmit, formState: { errors } } = useForm();
-  const { mutate, isPending, isSuccess, isError } = useSendMail();
+  const { mutate, isPending, isSuccess, isError, reset } = useSendMail();
 
   const onSubmit = (data) => {
     // Here you would typically handle the form submission
@@ -182,6 +181,14 @@ export default function ContactSection() {
           </a>
         </div>
       </div>
+        {isSuccess && (
+          <SuccessNotification reset={reset} />
+        )}
+
+        {isError && (
+            <ErrorNotification reset={reset} />
+        )}
+
     </div>
   )
 }

@@ -20,26 +20,11 @@ function App() {
 })  
 
 
-// useEffect(() => {
-//   // Este efecto se ejecutará al cargar el componente
-//   if (user.name) {
-//       // Aquí puedes realizar acciones adicionales si es necesario
-//       console.log('Componente cargado y usuario disponible');
-//   }
-// }, [user.name]); // Dependencia para ejecutar el efecto cuando user.name cambia
-
-
-
-
-  
-
   if(isLoading) return(
                         <div className=' w-screen h-screen flex justify-center items-center'>
                             <Spiner />
                         </div>
                       )
-
-  
 
   if(isError) user.setLogout()
 

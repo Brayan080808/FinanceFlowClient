@@ -1,16 +1,23 @@
+interface Data{
+  selectedCurrency:string;
+  expenseTags:string[];
+  incomeTags:string[];
+}
+
 
 interface WarnigData{
-  removedTags?:String[];
-  selectedCurrency?:String;
-  expenseTags?:String[];
-  incomeTags?:String[];
-  setShowWarning: () => void;
-  saveConfiguration:() => void;
+  removedTags?:string[];
+  selectedCurrency?:string;
+  expenseTags?:string[];
+  incomeTags?:string[];
+  setShowWarning: (warning:boolean) => void;
+  saveConfiguration:(data:Data) => void;
 
 }
 
 
-export default function Warning({removedTags,setShowWarning,saveConfiguration,selectedCurrency,expenseTags,incomeTags}):WarnigData{
+
+export default function Warning({removedTags,setShowWarning,saveConfiguration,selectedCurrency,expenseTags,incomeTags}:WarnigData){
 
 
 
@@ -29,8 +36,8 @@ export default function Warning({removedTags,setShowWarning,saveConfiguration,se
             <h3 className="text-2xl font-bold mb-4 text-red-600">Advertencia</h3>
             <p className="mb-4">Has eliminado las siguientes categorías:</p>
             <ul className="list-disc list-inside mb-4">
-              {removedTags.map((tag):string => (
-                <li key={tag}>{tag}</li>
+              {removedTags.map((tag:string,key:number) => (
+                <li key={key}>{tag}</li>
               ))}
             </ul>
             <p className="mb-6">Si continúas, se eliminarán todas las transacciones asociadas a estas categorías. ¿Estás seguro de que deseas continuar?</p>

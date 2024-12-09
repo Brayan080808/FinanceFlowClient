@@ -1,6 +1,5 @@
 import Spiner from '../Spiner';
 import useTransactions from '../../hooks/useTransaction';
-import useFilters from '../../store/useFilters';
 import Transaction from './Transaction';
 
 interface Transaction {
@@ -14,9 +13,7 @@ interface Transaction {
 }
 
 export default function TransactionsBox({resetNew,isError,isPending:isPendingNew,mutate}){
-  const { getUrl } = useFilters();
-  const url = getUrl();
-  const { transactions, isPending, fetchNextPage, hasNextPage, isFetchingNextPage,isFetchNextPageError } = useTransactions(url);
+  const { transactions, isPending, fetchNextPage, hasNextPage, isFetchingNextPage,isFetchNextPageError } = useTransactions();
 
   
 

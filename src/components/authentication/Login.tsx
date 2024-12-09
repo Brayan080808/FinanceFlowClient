@@ -1,4 +1,4 @@
-import { Github, Linkedin } from 'lucide-react'
+import { Github } from 'lucide-react'
 import { useGoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
 import serverUrl from '../../service/server';
@@ -10,8 +10,6 @@ import Logo from '../Logo'
 import Spiner from '../Spiner'
 import usePostLogin from '../../hooks/usePostLogin'
 
-type provider = "Google"|"Github"|"Linkedln"
-
 
 export default function Login() {
   const user = useUser();
@@ -20,14 +18,18 @@ export default function Login() {
   const { mutate, data, isSuccess, isPending } = usePostLogin();
 
   const handleSocialLogin = () => {
-    const clientId = 'Ov23liLaFblHYoYJ1Bn0';
+    const clientId = import.meta.env.VITE_CLIENT_ID_GITHUB;
     const url = `https://github.com/login/oauth/authorize?client_id=${clientId}`;
 
     window.location.assign(url);
-};
+  };
+
   const params = new URLSearchParams(window.location.search);
   const code = params.get('code');
   const provider = params.get('provider')
+
+  console.log("Que esta pasando?")
+  console.log("isSuccess",isSuccess)
 
   if(isSuccess){
     user.setName(data?.data.name)
@@ -38,6 +40,8 @@ export default function Login() {
       user.setMail(data?.data.mail)
     }
 
+    console.log("Vamoos bien")
+
     if (data?.status === 200){
       navigate('/dashboard/') 
     }
@@ -46,8 +50,8 @@ export default function Login() {
     }
   }
   else if(code && provider && user.name == " " && !isPending){
+    console.log("else if")
     mutate({code,provider})
-
 
   }
 
@@ -123,7 +127,7 @@ export default function Login() {
               Continuar con LinkedIn
             </button> */}
             <button
-              onClick={() => handleSocialLogin('GitHub')}
+              onClick={handleSocialLogin}
               className="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-full shadow-sm text-sm font-medium text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition duration-300 ease-in-out transform hover:-translate-y-1"
             >
               <Github className="w-5 h-5 mr-2" />
@@ -168,3 +172,6 @@ export default function Login() {
     </div>
   )
 }
+
+
+

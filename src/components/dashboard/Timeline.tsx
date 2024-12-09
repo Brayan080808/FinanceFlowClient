@@ -1,10 +1,11 @@
-import { LineChart, Line, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer,TooltipProps } from 'recharts';
 import { useState } from 'react';
 import useTimeline from '../../hooks/useTimeline';
 import Calendar from '../Calendar';
 import Spiner from '../Spiner';
 import GraphError from './GraphError';
 import useUser from '../../store/useUser';
+
 
 
 
@@ -18,7 +19,8 @@ export default function Timeline() {
 
 
 
-  const CustomTooltip = ({ active, payload }) => {
+ 
+  const CustomTooltip: React.FC<TooltipProps<any, any>> = ({ active, payload })=> {
     if (active && payload && payload.length) {
         const { date, value } = payload[0].payload; // Obtén los datos del payload
         return (
@@ -69,7 +71,7 @@ export default function Timeline() {
                         <LineChart data={filteredData}>
                           <YAxis dataKey="value" />
                           <XAxis dataKey="date" tick={false} />
-                          <Tooltip content={<CustomTooltip />} />
+                          <Tooltip content={<CustomTooltip  />} />
                           <Legend />
                           <Line type="monotone" dataKey="value" stroke="#45B7D1" strokeWidth={2} name="Transactions" dot={true} />
                         </LineChart>

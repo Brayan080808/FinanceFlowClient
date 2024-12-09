@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import useCategories from "../../hooks/useCategories";
-import { useForm, SubmitHandler } from 'react-hook-form';
-import useMutationPostTransactions from "../../hooks/useMutationPostTransactions";
+import { useForm } from 'react-hook-form';
 import useUser from "../../store/useUser";
 
 type TransactionType = "expense" | "income";
@@ -54,6 +53,14 @@ export default function AddTransactionBox({ mutate }) {
                 className={`w-full p-2 rounded border ${theme === 'dark' ? 'bg-gray-700 text-white' : 'bg-white'}`}
             />
             <select
+                className={`w-full p-2 rounded border ${theme === 'dark' ? 'bg-gray-700 text-white' : 'bg-white'}`}
+                value={type}
+                onChange={(e) => handleType(e.target.value as TransactionType)}
+            >
+                <option value="expense">Gasto</option>
+                <option value="income">Ingreso</option>
+            </select>
+            <select
                 {...register("category", { required: true })} // Registro con validación
                 className={`w-full p-2 rounded border ${theme === 'dark' ? 'bg-gray-700 text-white' : 'bg-white'}`}
             >
@@ -72,14 +79,7 @@ export default function AddTransactionBox({ mutate }) {
                     ))
                 }
             </select>
-            <select
-                className={`w-full p-2 rounded border ${theme === 'dark' ? 'bg-gray-700 text-white' : 'bg-white'}`}
-                value={type}
-                onChange={(e) => handleType(e.target.value as TransactionType)}
-            >
-                <option value="expense">Gasto</option>
-                <option value="income">Ingreso</option>
-            </select>
+
             <button type="submit" className="w-full px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600">
                 Guardar Transacción
             </button>
