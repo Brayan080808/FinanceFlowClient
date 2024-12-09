@@ -4,8 +4,8 @@ import useUser from '../../store/useUser';
 
 interface Data{
   category:string;
-  amount:number;
-  count:number;
+  amount:string;
+  count:string;
   income?:boolean;
   hidden?:boolean;
 }
@@ -56,13 +56,12 @@ export default function Graph({ categories,title }:Graph) {
 
   const convertedData = data.filter(item => !item.hidden)
 
-  const  visibleData = convertedData.map(item => ({
+
+  const  visibleData = convertedData.map((item:Data) => ({
     category: item.category,
     income: item.income,
-    // amount: parseFloat(item.amount), // Convierte a float
-    // count: parseInt(item.count, 10)   // Convierte a int
-    amount: item.amount, // Convierte a float
-    count: item.count   // Convierte a int
+    amount: parseFloat(item.amount), // Convierte a float
+    count: parseInt(item.count, 10)   // Convierte a int
 }));
 
   const renderChart = () => {

@@ -28,8 +28,6 @@ export default function Login() {
   const code = params.get('code');
   const provider = params.get('provider')
 
-  console.log("Que esta pasando?")
-  console.log("isSuccess",isSuccess)
 
   if(isSuccess){
     user.setName(data?.data.name)
@@ -39,8 +37,6 @@ export default function Login() {
     if(data?.data.mail){
       user.setMail(data?.data.mail)
     }
-
-    console.log("Vamoos bien")
 
     if (data?.status === 200){
       navigate('/dashboard/') 
