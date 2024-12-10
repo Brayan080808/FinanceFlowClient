@@ -1,6 +1,4 @@
-import { useState } from 'react'
 import { BarChart2, DollarSign, ShoppingBag, TrendingUp, TrendingDown } from 'lucide-react'
-
 import Graph from '../Graph/Graph'
 import TransactionsFilters from './TransactionsFilters'
 import useCategories from '../../hooks/useCategories'
@@ -9,6 +7,8 @@ import Timeline from './Timeline'
 import EmptyTransactions from '../dashboard/EmptyTransactions'
 import GraphError from './GraphError'
 import useUser from '../../store/useUser'
+import PdfDownload from '../PdfDownload'
+import { useRef } from 'react'
 
 interface Data{
   category:string;
@@ -18,11 +18,12 @@ interface Data{
 }
 
 // Definición de tipos para las transacciones y el nuevo objeto de transacción
-export default function Stadicts() {
-  const [view, setView] = useState<'day' | 'week' | 'month'>('week');
+export default function Stadicts(){
   const { theme } = useUser();
+  const contentRef = useRef();
 
   const { spendingCategory, incomeTotal, isError, isLoading, refetch } = useCategories();
+
   
 
 
@@ -39,21 +40,10 @@ export default function Stadicts() {
   
 
   return (
-    <div className=" w-screen flex-1 p-4 md:p-6  mx-auto " >
+    <div className=" w-screen flex-1 p-4 md:p-6  mx-auto " ref={contentRef} >
           <div className="flex justify-between items-center mb-6">
             <h1 className="text-2xl font-bold">Estadísticas</h1>
-            <div className="flex items-center space-x-2">
-            <select 
-              value={view} 
-              onChange={(e) => setView(e.target.value as 'day' | 'week' | 'month')} // Asegúrate de hacer la conversión de tipo
-              className={`border rounded p-2 ${theme === 'dark' ? 'bg-gray-700 text-white' : 'bg-white'}`}
-            >     
-                <option value="day">Día</option>
-                <option value="week">Semana</option>
-                <option value="month">Mes</option>
-            </select>
-              <button className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">Exportar</button>
-            </div>
+              <PdfDownload contentRef={contentRef} />
           </div>
 
           <div className="flex  flex-wrap md:flex-nowrap gap-6 mb-6">
@@ -127,6 +117,4 @@ export default function Stadicts() {
     </div>
   )
 }
-
-
  

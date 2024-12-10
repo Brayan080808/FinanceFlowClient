@@ -2,23 +2,24 @@ import { Moon, Sun } from 'lucide-react'
 import Profile from './authentication/Profile'
 import DashboardAside from './dashboard/DashboardAside'
 import { Github, Twitter } from "lucide-react"
-
 import { Outlet, Link } from 'react-router-dom'
 import useUser from '../store/useUser'
+import { useRef } from 'react'
 
 
 // Definición de tipos para las transacciones y el nuevo objeto de transacción
 export default function Stadicts() {
-  // const [theme, setTheme] = useState<'light' | 'dark'>('light');
   const { theme, setTheme } = useUser();
   const toggleTheme = () => {
       setTheme(theme === 'dark' ? 'light' : 'dark');
     };
 
+  const contentRef = useRef();
+
 
 
   return (
-    <div className={`w-screen overflow-hidden relative  ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-purple-50'}`}>
+    <div ref={contentRef} className={`w-screen overflow-hidden relative  ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-purple-50'}`}>
 
       
       <header className={`w-screen flex sticky shadow-xl z-20 top-0 left-0 right-0 justify-between items-center p-4 md:p-6 ${theme === 'dark' ? 'bg-gray-800' : 'bg-white'} h-20`}>
@@ -46,7 +47,7 @@ export default function Stadicts() {
         <main>
             <Outlet />
         </main>
-        <footer className={`w-full py-6 px-4 mt-auto border-t ${
+      <footer className={`w-full py-6 px-4 mt-auto border-t ${
       theme === "dark" 
         ? "bg-slate-900 border-slate-800 text-slate-400" 
         : "bg-white border-slate-200 text-slate-600"
@@ -115,19 +116,8 @@ export default function Stadicts() {
           </p>
         </div>
       </div>
-    </footer>
+      </footer>
       </div>
   )
 }
-
-
-
-
-
-
-
-
-
-
-
 
